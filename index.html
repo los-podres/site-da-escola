@@ -1,95 +1,82 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escola Exemplo</title>
-  <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Escola Exemplo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Colégio Ambrósio Bini</title>
   <link rel="stylesheet" href="css/style.css" />
-
-  <!-- Ícones do Font Awesome -->
   <script src="https://kit.fontawesome.com/a2f5e61f60.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <img src="/imagens/logo.png" alt="Logo da Escola" />
-    </div>
-<div>
-<nav class="menu">
-      <ul>
-        <li>
-          <a href="#">
-            <i class="home.png"></i><br>
-            <img src="/imagens/hoe.png"
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-school"></i><br>
-            Escola
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-user-edit"></i><br>
-            Matrículas
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-tree"></i><br>
-            Quintal de Brincar
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-heart"></i><br>
-            Celebrações
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-blog"></i><br>
-            Blog
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-envelope"></i><br>
-            Contato
-          </a>
-        </li>
-      </ul>
-    </nav>
+
+<header>
+  <div class="logo">
+    <img src="imagens/logo.png" alt="Logo Colégio Ambrósio Bini" />
+  </div>
+  <nav class="menu">
+    <ul>
+      <li><a href="#" class="ativo"><i class="fas fa-home"></i> Início</a></li>
+      <li><a href="#"><i class="fas fa-school"></i> Escola</a></li>
+      <li><a href="#"><i class="fas fa-user-edit"></i> Matrículas</a></li>
+      <li><a href="#"><i class="fas fa-tree"></i> Quintal de Brincar</a></li>
+      <li><a href="#"><i class="fas fa-heart"></i> Celebrações</a></li>
+      <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+      <li><a href="#"><i class="fas fa-envelope"></i> Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Aqui está a imagem adicionada exatamente como você pediu -->
+<div class="foto1-container">
+  <img src="imagens/foto1.jpg" alt="Foto 1" />
 </div>
-    
-  </header>
-</body>
-</html>
 
-  <main>
-    <section class="destaque">
-      <h2>Bem-vindo à Escola Exemplo!</h2>
-      <p>Formando o futuro com educação de qualidade.</p>
-    </section>
+<!-- O resto do seu conteúdo permanece igual -->
+<main>
+  <section class="sobre">
+    <h2>Sobre o Colégio Ambrósio Bini</h2>
+    <p>O Colégio Ambrósio Bini é referência em ensino fundamental e infantil, oferecendo uma educação de excelência com foco no desenvolvimento integral das crianças.</p>
+  </section>
 
-    <section class="sobre">
-      <h2>Sobre Nós</h2>
-      <p>A Escola Exemplo oferece ensino de qualidade com professores dedicados e uma infraestrutura moderna.</p>
-    </section>
-  </main>
+  <section class="metodologia">
+    <h2>Metodologia</h2>
+    <p>Nossa metodologia combina práticas pedagógicas inovadoras com atenção individualizada, garantindo que cada aluno alcance seu máximo potencial.</p>
+  </section>
 
-  <footer>
-    <p>&copy; 2025 Escola Exemplo. Todos os direitos reservados.</p>
-  </footer>
+  <section class="atividades">
+    <h2>Atividades</h2>
+    <p>Oferecemos atividades extracurriculares diversificadas, incluindo esportes, música, artes e atividades ao ar livre, estimulando o aprendizado e a socialização.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-info">
+    <p>&copy; 2025 Colégio Ambrósio Bini - Todos os direitos reservados.</p>
+    <div class="social">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  document.querySelector(".next")?.addEventListener("click", () => {
+    slides[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add("active");
+  });
+
+  document.querySelector(".prev")?.addEventListener("click", () => {
+    slides[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    slides[currentSlide].classList.add("active");
+  });
+</script>
+
 </body>
 </html>

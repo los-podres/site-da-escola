@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Galeria — Colégio Ambrósio Bini</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Styles mínimos específicos da galeria */
+    .galeria-container { max-width:1100px; margin:30px auto; padding:0 20px; }
+    .galeria-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap:14px;
+    }
+    .galeria-item { cursor:pointer; overflow:hidden; border-radius:12px; background:#f0f0f0; }
+    .galeria-item img {
+      width:100%; height:220px; object-fit:cover; display:block; transition:transform .3s;
+    }
+    .galeria-item:hover img{ transform:scale(1.05); }
+
+    /* Lightbox simples */
+    .lightbox {
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.8); z-index:9999; padding:20px; visibility:hidden; opacity:0; transition:opacity .2s;
+    }
+    .lightbox.open{ visibility:visible; opacity:1; }
+    .lightbox img{ max-width:calc(100% - 40px); max-height:calc(100% - 40px); border-radius:8px; }
+    .lightbox .close{ position:absolute; top:18px; right:20px; font-size:28px; color:white; background:none; border:none; cursor:pointer; }
+    .no-images { text-align:center; color:#666; padding:40px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="index.html"><img src="imagens/logo.png" alt="Logo Colégio Ambrósio Bini" /></a>
+    </div>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="index.html#Sobre">Escola</a></li>
+        <li><a class="ativo" href="Galeria.html">Galeria</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="galeria-container">
+    <h1>Galeria de Imagens</h1>
+    <p>Clique numa imagem para ampliar.</p>
+
+    <div id="gallery" class="galeria-grid" aria-live="polite"></div>
+    <div id="noImages" class="no-images" hidden>Nenhuma imagem encontrada na pasta <code>/imagens</code>.</div>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" tabindex="-1">
+    <button class="close" aria-label="Fechar" id="lbClose">&times;</button>
+    <img id="lbImg" src="" alt="Imagem ampliada" />
+  </div>
+
+  <script>
+    // Tenta carregar imagens da pasta /imagens com nomes foto1..foto12 e extensões comuns.
+    (function(){
+      const gallery = document.getElementById('gallery');
+      const noImages = document.getElementById('noImages');
+      const candidates = [];
+      for (let i=1;i<=12;i++) candidates.push('foto'+i);
+      // adicionar alguns nomes frequentemente usados caso existam
+      candidates.push('foto1','foto2','foto3','foto4','banner','image','logo');
+      const exts = ['jpg','jpeg','png','webp'];
+      let found = 0;
+
+      function tryLoad(name, ext, onSuccess, onFail){
+        const img = new Image();
+        img.src = `imagens/${name}.${ext}`;
+        img.onload = () => onSuccess(img.src);
+        img.onerror = onFail;
+      }
+
+      // evita duplicatas
+      const seen = new Set();
+
+      function appendImage(src){
+        if (seen.has(src)) return;
+        seen.add(src);
+        found++;
+        const item = document.createElement('div');
+        item.className = 'galeria-item';
+        const im = document.createElement('img');
+        im.src = src;
+        im.alt = 'Foto da galeria';
+        item.appendChild(im);
+        item.addEventListener('click', ()=> openLightbox(src));
+        gallery.appendChild(item);
+      }
+
+      // tenta todas as combinações assincronamente
+      let pending = 0;
+      candidates.forEach(name=>{
+        exts.forEach(ext=>{
+          pending++;
+          tryLoad(name,ext,
+            (src)=>{ appendImage(src); if(--pending===0) finish(); },
+            ()=>{ if(--pending===0) finish(); }
+          );
+        });
+      });
+
+      function finish(){
+        if (found===0){ noImages.hidden = false; }
+      }
+
+      // Lightbox
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lbImg');
+      const lbClose = document.getElementById('lbClose');
+      function openLightbox(src){
+        lbImg.src = src;
+        lb.classList.add('open');
+        lb.focus();
+      }
+      function closeLightbox(){
+        lb.classList.remove('open');
+        lbImg.src = '';
+      }
+      lbClose.addEventListener('click', closeLightbox);
+      lb.addEventListener('click', (e)=> { if (e.target===lb) closeLightbox(); });
+      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+    })();
+  </script>
+</body>
+</html>
+```// filepath: /workspaces/site-da-escola/Galeria.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Galeria — Colégio Ambrósio Bini</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Styles mínimos específicos da galeria */
+    .galeria-container { max-width:1100px; margin:30px auto; padding:0 20px; }
+    .galeria-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap:14px;
+    }
+    .galeria-item { cursor:pointer; overflow:hidden; border-radius:12px; background:#f0f0f0; }
+    .galeria-item img {
+      width:100%; height:220px; object-fit:cover; display:block; transition:transform .3s;
+    }
+    .galeria-item:hover img{ transform:scale(1.05); }
+
+    /* Lightbox simples */
+    .lightbox {
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.8); z-index:9999; padding:20px; visibility:hidden; opacity:0; transition:opacity .2s;
+    }
+    .lightbox.open{ visibility:visible; opacity:1; }
+    .lightbox img{ max-width:calc(100% - 40px); max-height:calc(100% - 40px); border-radius:8px; }
+    .lightbox .close{ position:absolute; top:18px; right:20px; font-size:28px; color:white; background:none; border:none; cursor:pointer; }
+    .no-images { text-align:center; color:#666; padding:40px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="index.html"><img src="imagens/logo.png" alt="Logo Colégio Ambrósio Bini" /></a>
+    </div>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="index.html#Sobre">Escola</a></li>
+        <li><a class="ativo" href="Galeria.html">Galeria</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="galeria-container">
+    <h1>Galeria de Imagens</h1>
+    <p>Clique numa imagem para ampliar.</p>
+
+    <div id="gallery" class="galeria-grid" aria-live="polite"></div>
+    <div id="noImages" class="no-images" hidden>Nenhuma imagem encontrada na pasta <code>/imagens</code>.</div>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" tabindex="-1">
+    <button class="close" aria-label="Fechar" id="lbClose">&times;</button>
+    <img id="lbImg" src="" alt="Imagem ampliada" />
+  </div>
+
+  <script>
+    // Tenta carregar imagens da pasta /imagens com nomes foto1..foto12 e extensões comuns.
+    (function(){
+      const gallery = document.getElementById('gallery');
+      const noImages = document.getElementById('noImages');
+      const candidates = [];
+      for (let i=1;i<=12;i++) candidates.push('foto'+i);
+      // adicionar alguns nomes frequentemente usados caso existam
+      candidates.push('foto1','foto2','foto3','foto4','banner','image','logo');
+      const exts = ['jpg','jpeg','png','webp'];
+      let found = 0;
+
+      function tryLoad(name, ext, onSuccess, onFail){
+        const img = new Image();
+        img.src = `imagens/${name}.${ext}`;
+        img.onload = () => onSuccess(img.src);
+        img.onerror = onFail;
+      }
+
+      // evita duplicatas
+      const seen = new Set();
+
+      function appendImage(src){
+        if (seen.has(src)) return;
+        seen.add(src);
+        found++;
+        const item = document.createElement('div');
+        item.className = 'galeria-item';
+        const im = document.createElement('img');
+        im.src = src;
+        im.alt = 'Foto da galeria';
+        item.appendChild(im);
+        item.addEventListener('click', ()=> openLightbox(src));
+        gallery.appendChild(item);
+      }
+
+      // tenta todas as combinações assincronamente
+      let pending = 0;
+      candidates.forEach(name=>{
+        exts.forEach(ext=>{
+          pending++;
+          tryLoad(name,ext,
+            (src)=>{ appendImage(src); if(--pending===0) finish(); },
+            ()=>{ if(--pending===0) finish(); }
+          );
+        });
+      });
+
+      function finish(){
+        if (found===0){ noImages.hidden = false; }
+      }
+
+      // Lightbox
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lbImg');
+      const lbClose = document.getElementById('lbClose');
+      function openLightbox(src){
+        lbImg.src = src;
+        lb.classList.add('open');
+        lb.focus();
+      }
+      function closeLightbox(){
+        lb.classList.remove('open');
+        lbImg.src = '';
+      }
+      lbClose.addEventListener('click', closeLightbox);
+      lb.addEventListener('click', (e)=> { if (e.target===lb) closeLightbox(); });
+      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+    })();
+  </script>
+</body>
+</html>

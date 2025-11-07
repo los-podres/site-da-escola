@@ -6,28 +6,35 @@
 
 body {
   font-family: Arial, sans-serif;
-}
+} 
 
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 20px;
   background-color: white;
   flex-wrap: wrap;
 }
 
-.logo{
-    width: 20%;
+.logo {
+  width: auto;
 }
+
 .logo img {
-  height: 100px; /* Diminuiu de 200px para 100px */
+  height: 100px;
   margin-left: 20px;
+}
+
+.menu {
+  flex: 1;
+  text-align: center;
 }
 
 .menu ul {
   list-style: none;
-  display: flex;
-  gap: 100px;
+  display: inline-flex;
+  gap: 60px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -54,11 +61,20 @@ header {
   color: #007bff;
 }
 
-/* === CARROSSEL === */
+.menu li a.ativo {
+  color: #007bff;
+  font-weight: bold;
+}
+
+
+
 .carousel {
   position: relative;
   width: 100%;
-  max-height: 500px;
+  max-width: 900px; /* largura máxima reduzida */
+  margin: 20px auto; /* centraliza */
+  /* altura responsiva: mínimo 280px, máximo 600px, preferência em 45vh */
+  height: clamp(280px, 45vh, 600px);
   overflow: hidden;
   margin-bottom: 40px;
 }
@@ -66,56 +82,42 @@ header {
 .slides {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100%; /* ocupa a altura do carousel */
 }
 
 .slide {
   display: none;
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
 }
 
 .slide img {
+  border-radius: 5%;
   width: 100%;
-  height: 500px;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
+  -o-object-fit: cover;
 }
 
 .slide.active {
   display: block;
 }
 
-.slide-text {
-  position: absolute;
-  bottom: 25%;
-  left: 10%;
-  color: white;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-  max-width: 400px;
-}
-
-.slide-text h2 {
-  font-size: 48px;
-  margin-bottom: 10px;
-  font-weight: 700;
-}
-
-.slide-text p {
-  font-size: 20px;
-}
-
+/* Botões do carrossel */
 .carousel .prev,
 .carousel .next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 48px;
+  font-size: 36px; /* menor que antes */
   background-color: rgba(0,0,0,0.3);
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 8px 12px;
   cursor: pointer;
   z-index: 10;
   border-radius: 50%;
@@ -128,12 +130,29 @@ header {
 }
 
 .carousel .prev {
-  left: 15px;
+  left: 12px;
 }
 
 .carousel .next {
-  right: 15px;
+  right: 12px;
 }
+
+/* Ajustes para telas pequenas */
+@media (max-width: 600px) {
+  .carousel {
+    max-width: 100%;
+    height: clamp(200px, 35vh, 360px);
+    margin: 12px;
+  }
+  .carousel .prev,
+  .carousel .next {
+    font-size: 28px;
+    padding: 6px 10px;
+  }
+}
+
+
+
 
 /* Main content sections */
 main {
@@ -193,23 +212,55 @@ footer .social a:hover {
   color: #007bff;
 }
 
-/* Menu ativo */
-.menu li a.ativo {
-  color: #007bff;
-  font-weight: bold;
+.contato {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f8f8f8;
+}
+
+.contato h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.contato p {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.contato-links a {
+  display: block;
+  margin: 10px auto;
+  text-decoration: none;
+  color: #0066cc;
+  font-size: 1.1em;
+  transition: color 0.3s;
+}
+
+.contato-links a:hover {
+  color: #004999;
+}
+
+.contato-links i {
+  margin-right: 8px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 /* === ADIÇÃO FOTO1 === */
 .foto1-container {
   width: 100%;
-  max-width: 1200px; /* para ficar alinhado com o conteúdo */
+  max-width: 1200px;
   margin: 20px auto;
-  text-align: center; /* centraliza horizontalmente */
+  text-align: center;
 }
 
 .foto1-container img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px; /* leve arredondado */
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
